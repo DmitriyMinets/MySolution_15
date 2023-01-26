@@ -17,21 +17,9 @@ namespace Ex_3
                 new Clients { Id= 4, Month = 3, Year = 2021, TrainingTime = 38},
             };
 
-            var group = from x in clients
-                        group x by x.Year into g
-                        select new
-                        {
-                            Year = g.Key,
-                            sumTimeTraining = g.Sum(x => x.TrainingTime)
-                        };
-
-            var query = group.Where(x => x.sumTimeTraining == group.Max(y => y.sumTimeTraining))
-                .Select(x => $"{x.sumTimeTraining} {x.Year}").Last();
+            var query = clients.GroupBy(x => x.Year).Select(x => $"{x.Sum(x => x.TrainingTime)} часов - в {x.Key}").Last();
 
             Console.WriteLine(query);
-
-
-
         }
     }
 
